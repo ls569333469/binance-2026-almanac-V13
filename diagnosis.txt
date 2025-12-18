@@ -1,0 +1,33 @@
+:: DIAGNOSIS START ::
+Navigating...
+[CONSOLE] error: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[CONSOLE] error: Failed to load resource: the server responded with a status of 404 (Not Found)
+[CONSOLE] debug: [vite] connecting...
+[CONSOLE] debug: [vite] connected.
+[HTML OUTPUT]
+<!DOCTYPE html><html lang="en"><head>
+            <meta charset="UTF-8">
+            <title>Error</title>
+            <script type="module">
+              const error = {"message":"Unable to parse HTML; parse5 error code end-tag-without-matching-open-element\n at E:/Binance 2026 Luminous Almanac/2026/index.html:129:1\n","stack":" at E:/Binance 2026 Luminous Almanac/2026/index.html:129:1\n    at handleParseError (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:35172:9)\n    at Parser.onParseError (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:35097:7)\n    at Parser._err (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-D-7KCb9p.js:4932:14)\n    at endTagInHead (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-D-7KCb9p.js:6197:15)\n    at Parser._endTagOutsideForeignContent (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-D-7KCb9p.js:5699:17)\n    at Parser.onEndTag (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-D-7KCb9p.js:5681:18)\n    at Tokenizer.emitCurrentTagToken (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-D-7KCb9p.js:1355:26)\n    at Tokenizer._stateTagName (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-D-7KCb9p.js:2037:22)\n    at Tokenizer._callState (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-D-7KCb9p.js:1542:22)\n    at Tokenizer._runParsingLoop (file:///E:/Binance%202026%20Luminous%20Almanac/2026/node_modules/vite/dist/node/chunks/dep-D-7KCb9p.js:1179:22)","frame":""}
+              try {
+                const { ErrorOverlay } = await import("/@vite/client")
+                document.body.appendChild(new ErrorOverlay(error))
+              } catch {
+                const h = (tag, text) => {
+                  const el = document.createElement(tag)
+                  el.textContent = text
+                  return el
+                }
+                document.body.appendChild(h('h1', 'Internal Server Error'))
+                document.body.appendChild(h('h2', error.message))
+                document.body.appendChild(h('pre', error.stack))
+                document.body.appendChild(h('p', '(Error overlay failed to load)'))
+              }
+            </script>
+          </head>
+          <body>
+          
+        
+      <vite-error-overlay></vite-error-overlay></body></html>
+[ROOT CONTENT LENGTH]: 14

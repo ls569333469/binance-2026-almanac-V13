@@ -1,148 +1,149 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Binance 2026 Luminous Almanac</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&family=JetBrains+Mono:wght@500&family=Noto+Sans+SC:wght@300;500;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" crossorigin="anonymous">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Config to match PRD Variables -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              'binance-yellow': '#F0B90B',
-            },
-            fontFamily: {
-              'ui': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-              'hei': ['"Noto Sans SC"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-              'song': ['"Noto Serif SC"', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
-              'code': ['"JetBrains Mono"', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
-            },
-            animation: {
-              'dot-breathe': 'dotBreathe 3s infinite',
-            },
-            keyframes: {
-              dotBreathe: {
-                '0%, 100%': { opacity: '1', transform: 'scale(1)' },
-                '50%': { opacity: '0.6', transform: 'scale(0.8)' },
-              }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Binance 2026 Luminous Almanac</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&family=JetBrains+Mono:wght@500&family=Noto+Sans+SC:wght@300;500;700&family=Noto+Serif+SC:wght@700&display=swap"
+    rel="stylesheet" crossorigin="anonymous">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config to match PRD Variables -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'binance-yellow': '#F0B90B',
+          },
+          fontFamily: {
+            'ui': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+            'hei': ['"Noto Sans SC"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            'song': ['"Noto Serif SC"', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
+            'code': ['"JetBrains Mono"', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+          },
+          animation: {
+            'dot-breathe': 'dotBreathe 3s infinite',
+          },
+          keyframes: {
+            dotBreathe: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.6', transform: 'scale(0.8)' },
             }
           }
         }
       }
-    </script>
+    }
+  </script>
 
-    <!-- Global Styles for Background & Void Artifact Animation -->
-    <style>
-      body {
-        margin: 0;
-        background-color: #000;
-        background-image: radial-gradient(circle at 50% 0%, #151921 0%, #000 85%), radial-gradient(circle at 85% 30%, rgba(240, 185, 11, 0.08) 0%, transparent 50%);
-        height: 100vh;
-        overflow: hidden;
-      }
+  <!-- Global Styles for Background & Void Artifact Animation -->
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      background-image: radial-gradient(circle at 50% 0%, #151921 0%, #000 85%), radial-gradient(circle at 85% 30%, rgba(240, 185, 11, 0.08) 0%, transparent 50%);
+      height: 100vh;
+      overflow: hidden;
+    }
 
-      /* =========================================================================
+    /* =========================================================================
          >>> 虚空造物 (Void Artifact) 动效核心样式 <<<
          ========================================================================= */
 
-      /* 1. 流光扫过层 (The Sheen) */
-      .void-sheen {
-          position: absolute; 
-          /* UPDATED: Increased height and negative top to prevent top-edge rendering artifacts (the "black line" issue) */
-          top: -20%; 
-          height: 140%;
-          left: -150%; 
-          width: 60%; 
-          /* 一道锐利的、带有币安黄色的反光 */
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), rgba(240, 185, 11, 0.3), transparent);
-          transform: skewX(-20deg); /* 倾斜角度 */
-          pointer-events: none; 
-          z-index: 15; /* 确保在背景 Logo 之上，文字之下 */
-          mix-blend-mode: overlay; /* 叠加模式，增强通透感 */
+    /* 1. 流光扫过层 (The Sheen) */
+    .void-sheen {
+      position: absolute;
+      /* UPDATED: Increased height and negative top to prevent top-edge rendering artifacts (the "black line" issue) */
+      top: -20%;
+      height: 140%;
+      left: -150%;
+      width: 60%;
+      /* 一道锐利的、带有币安黄色的反光 */
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), rgba(240, 185, 11, 0.3), transparent);
+      transform: skewX(-20deg);
+      /* 倾斜角度 */
+      pointer-events: none;
+      z-index: 15;
+      /* 确保在背景 Logo 之上，文字之下 */
+      mix-blend-mode: overlay;
+      /* 叠加模式，增强通透感 */
+    }
+
+    /* 动画关键帧：从左扫到右 */
+    @keyframes sheen-pass {
+      0% {
+        left: -100%;
       }
 
-      /* 动画关键帧：从左扫到右 */
-      @keyframes sheen-pass { 
-          0% { left: -100%; } 
-          100% { left: 250%; } 
+      100% {
+        left: 250%;
       }
+    }
 
-      /* 2. 内容包裹器 (The Wrapper) - 负责整体的消隐过渡 */
-      .content-wrapper {
-          flex: 1;
-          display: flex; 
-          flex-direction: column;
-          /* 定义平滑的过渡效果 - 极速响应调优 */
-          /* opacity: 0.25s (快速消隐), transform: 0.5s (快速回弹) */
-          transition: opacity 0.25s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.25s ease;
-          opacity: 1;
-          transform: translateY(0);
-          filter: blur(0px);
-      }
+    /* 2. 内容包裹器 (The Wrapper) - 负责整体的消隐过渡 */
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      /* 定义平滑的过渡效果 - 极速响应调优 */
+      /* opacity: 0.25s (快速消隐), transform: 0.5s (快速回弹) */
+      transition: opacity 0.25s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.25s ease;
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
 
-      /* ================= 动效触发状态 ================= */
+    /* ================= 动效触发状态 ================= */
 
-      /* 当卡片进入动画状态时 */
-      .crystal-card.animating .void-sheen {
-          /* 触发流光动画，持续 0.6秒 (匹配 App.tsx 的 setTimeout) */
-          animation: sheen-pass 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-      }
+    /* 当卡片进入动画状态时 */
+    .crystal-card.animating .void-sheen {
+      /* 触发流光动画，持续 0.6秒 (匹配 App.tsx 的 setTimeout) */
+      animation: sheen-pass 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    }
 
-      .crystal-card.animating .content-wrapper {
-          opacity: 0; /* 变透明 */
-          transform: translateY(20px); /* 向下沉降 */
-          filter: blur(8px); /* 动态模糊 (稍微减弱一点模糊度以适应快节奏) */
-      }
+    .crystal-card.animating .content-wrapper {
+      opacity: 0;
+      /* 变透明 */
+      transform: translateY(20px);
+      /* 向下沉降 */
+      filter: blur(8px);
+      /* 动态模糊 (稍微减弱一点模糊度以适应快节奏) */
+    }
 
-      /* =========================================================================
+    /* =========================================================================
          >>> 影棚模式 (Studio Mode) - 用于光学录制 <<<
          ========================================================================= */
-      
-      /* 当 body 进入 capture-mode 时，隐藏所有标记为 hide-on-capture 的元素 */
-      body.capture-mode .hide-on-capture {
-        display: none !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
 
-      /* 录制时隐藏鼠标指针，避免录进去 */
-      body.capture-mode {
-        cursor: none;
-      }
-      
-      /* 录制时隐藏滚动条 */
-      body.capture-mode ::-webkit-scrollbar {
-        display: none;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-    "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "jspdf": "https://esm.sh/jspdf@^3.0.4",
-    "html-to-image": "https://esm.sh/html-to-image@^1.11.13"
-  }
-}
-</script>
+    /* 当 body 进入 capture-mode 时，隐藏所有标记为 hide-on-capture 的元素 */
+    body.capture-mode .hide-on-capture {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* 录制时隐藏鼠标指针，避免录进去 */
+    body.capture-mode {
+      cursor: none;
+    }
+
+    /* 录制时隐藏滚动条 */
+    body.capture-mode ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
 </head>
-  <body>
-    <div id="root"></div>
-  </body>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>

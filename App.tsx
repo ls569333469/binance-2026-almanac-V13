@@ -4,17 +4,24 @@ import { CrystalCard } from './components/CrystalCard';
 import { getAlmanacDataSync } from './services/geminiService';
 import { AlmanacEvent } from './types';
 import { soundEngine } from './services/soundEngine';
-import { AdminSnapshotHub } from './components/AdminSnapshotHub';
+import { FrozenLightHub } from './components/FrozenLightHub';
 
 const App: React.FC = () => {
-  // 初始化日期：2026年1月1日
+  // 1. 初始化日期：优先从 URL 读取 (?month=0&day=1)，否则默认为 2026-01-01
   const [currentDate, setCurrentDate] = useState<Date>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const m = parseInt(params.get('month') || '0', 10);
+    const d = parseInt(params.get('day') || '1', 10);
+    // basic validation
+    if (!isNaN(m) && !isNaN(d) && m >= 0 && m <= 11 && d >= 1 && d <= 31) {
+      return new Date(2026, m, d);
+    }
     return new Date(2026, 0, 1);
   });
 
   // 使用同步方法直接初始化数据，避免首屏 null 状态
   const [eventData, setEventData] = useState<AlmanacEvent>(() => getAlmanacDataSync(currentDate));
-  
+
   // 状态控制：导航锁与视觉过渡状态
   const [isNavigating, setIsNavigating] = useState<boolean>(false);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
@@ -41,7 +48,7 @@ const App: React.FC = () => {
   const performNavigation = useCallback((newDate: Date) => {
     // 1. 锁定导航，防止动画中途重复点击
     setIsNavigating(true);
-    
+
     // 2. 触发进场动画 (The Vanishing)
     // 设置为 true 后，CrystalCard 会添加 .animating 类，触发 CSS 中的模糊和流光
     setIsTransitioning(true);
@@ -51,6 +58,13 @@ const App: React.FC = () => {
     setTimeout(() => {
       setEventData(getAlmanacDataSync(newDate));
       setCurrentDate(newDate);
+
+      // Update URL without reloading (optional, helps with bookmarking but mostly for consistency)
+      const url = new URL(window.location.href);
+      url.searchParams.set('month', newDate.getMonth().toString());
+      url.searchParams.set('day', newDate.getDate().toString());
+      window.history.replaceState({}, '', url);
+
     }, 250);
 
     // 4. 触发出场动画 (The Reveal)
@@ -58,7 +72,7 @@ const App: React.FC = () => {
     setTimeout(() => {
       setIsTransitioning(false); // 移除 .animating 类
       setIsNavigating(false);    // 解锁点击
-    }, 600); 
+    }, 600);
   }, []);
 
   // 边缘点击导航
@@ -67,7 +81,7 @@ const App: React.FC = () => {
 
     const newDate = new Date(currentDate);
     newDate.setDate(currentDate.getDate() + direction);
-    
+
     // 保持年份在 2026
     if (newDate.getFullYear() !== 2026) {
       newDate.setFullYear(2026);
@@ -84,6 +98,12 @@ const App: React.FC = () => {
     // 跳转不需要 performNavigation 的流光过渡，因为 CrystalCard 内部有 FlashBang (白屏闪光) 遮罩
     setCurrentDate(newDate);
     setEventData(getAlmanacDataSync(newDate));
+
+    // Update URL
+    const url = new URL(window.location.href);
+    url.searchParams.set('month', monthIndex.toString());
+    url.searchParams.set('day', day.toString());
+    window.history.replaceState({}, '', url);
   }, []);
 
   // 滚轮监听
@@ -105,7 +125,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isNavigating) return;
-      
+
       if (e.key === 'ArrowLeft') {
         navigateDay(-1);
       } else if (e.key === 'ArrowRight') {
@@ -119,20 +139,21 @@ const App: React.FC = () => {
 
   return (
     // CHANGED: overflow-hidden -> overflow-y-auto to allow scrolling on small vertical screens
-    <div className="w-full h-full flex flex-col items-center justify-center relative overflow-y-auto overflow-x-hidden">
-      
+    <div className="w-full h-screen flex flex-col items-center justify-center relative overflow-y-auto overflow-x-hidden">
+
       {/* Background Ambient Light */}
       <div className="fixed top-1/2 left-full w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0"
-           style={{ background: 'radial-gradient(circle, rgba(240, 185, 11, 0.08) 0%, transparent 60%)' }}>
+        style={{ background: 'radial-gradient(circle, rgba(240, 185, 11, 0.08) 0%, transparent 60%)' }}>
       </div>
 
       {/* Main Card Render */}
       <div className="w-full flex justify-center transform transition-transform duration-500 z-10 shrink-0">
-        <CrystalCard 
-          data={eventData} 
+        <CrystalCard
+          data={eventData}
           isTransitioning={isTransitioning}
           onNavigate={navigateDay}
           onJump={handleJump}
+          isExport={new URLSearchParams(window.location.search).get('mode') === 'export'}
         />
       </div>
 
@@ -141,8 +162,9 @@ const App: React.FC = () => {
         SCROLL, KEYS or CLICK EDGES to NAVIGATE
       </div>
 
-      {/* Admin Tool: Hidden unless ?mode=admin_capture */}
-      <AdminSnapshotHub />
+      {/* Project: Frozen Light Hub */}
+      {/* The invisible trigger & dual engine controller */}
+      <FrozenLightHub currentMood={eventData.mood} />
     </div>
   );
 };
