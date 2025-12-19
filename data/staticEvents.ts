@@ -1,5 +1,5 @@
 
-import { AlmanacEvent, Mood } from "../types";
+import { Mood } from "../types";
 
 /**
  * =============================================================================

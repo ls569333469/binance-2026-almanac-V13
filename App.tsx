@@ -190,7 +190,7 @@ const App: React.FC = () => {
       {/* STUDIO X: Director Mode (Headless) */}
       {import.meta.env.DEV && (
         <DirectorControl
-          ref={directorRef}
+          ref={directorRef as any}
           stageRef={stageRef}
           ambientRef={ambientRef}
           onNavigate={navigateDay}

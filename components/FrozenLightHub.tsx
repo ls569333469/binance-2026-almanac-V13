@@ -9,28 +9,10 @@ interface FrozenLightHubProps {
   onPlayCinematic?: () => void;
 }
 
-interface CropPadding {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
-}
-
 export const FrozenLightHub: React.FC<FrozenLightHubProps> = ({ currentMood, month, day, onPlayCinematic }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<string>('就绪 (READY)');
   const [calibrationMode, setCalibrationMode] = useState(false);
-  const [padding, setPadding] = useState<CropPadding>({ top: 40, right: 40, bottom: 40, left: 40 });
-
-  useEffect(() => {
-    const saved = localStorage.getItem('FROZEN_CROP_CONFIG');
-    if (saved) { try { setPadding(JSON.parse(saved)); } catch (e) { console.error('Failed to load crop config', e); } }
-  }, []);
-
-  const savePadding = (newPadding: CropPadding) => {
-    setPadding(newPadding);
-    localStorage.setItem('FROZEN_CROP_CONFIG', JSON.stringify(newPadding));
-  };
 
   /**
    * ===========================================================================

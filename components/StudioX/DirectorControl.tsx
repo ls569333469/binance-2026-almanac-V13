@@ -3,8 +3,8 @@ import { soundEngine } from '../../services/soundEngine';
 import { BINANCE_LOGO_PATHS } from '../../types';
 
 interface DirectorControlProps {
-    stageRef: React.RefObject<HTMLDivElement>;
-    ambientRef: React.RefObject<HTMLDivElement>;
+    stageRef: React.RefObject<HTMLDivElement | null>;
+    ambientRef: React.RefObject<HTMLDivElement | null>;
     onNavigate: (direction: number) => void;
     onJump: (month: number, day: number) => void;
     onCinematicModeChange: (isCinematic: boolean) => void;
@@ -14,7 +14,7 @@ export interface DirectorHandle {
     play: () => void;
 }
 
-export const DirectorControl = forwardRef<DirectorHandle, DirectorControlProps>(({ stageRef, ambientRef, onNavigate, onJump, onCinematicModeChange }, ref) => {
+export const DirectorControl = forwardRef<DirectorHandle, DirectorControlProps>(({ stageRef, ambientRef, onJump, onCinematicModeChange }, ref) => {
 
     // Internal state for the loop
     const frameId = useRef<number>(0);
@@ -106,7 +106,7 @@ export const DirectorControl = forwardRef<DirectorHandle, DirectorControlProps>(
                     if (t >= 12 && t < 17) targetEventId = 2; else if (t >= 17 && t < 22) targetEventId = 3; else if (t >= 22 && t < 27) targetEventId = 4; else if (t >= 27 && t < 32) targetEventId = 5; else if (t >= 32) targetEventId = 6;
                     if (targetEventId !== lastEventId) { TriggerJumpLogic(targetEventId); lastEventId = targetEventId; }
                     if (targetEventId === 6) {
-                        const ascP = (t - 32) / 10; const easeAsc = easeOutCubic(ascP); const lift = -20 * ascP;
+                        const ascP = (t - 32) / 10; const lift = -20 * ascP;
                         stageRef.current.style.transform = `perspective(1000px) scale(1.35) translateY(${lift}px)`;
                         if (t > 40) stageRef.current.style.opacity = `${1 - (t - 40) * 0.5}`;
                     } else {
@@ -135,7 +135,7 @@ export const DirectorControl = forwardRef<DirectorHandle, DirectorControlProps>(
     const TriggerFlashInternal = (dur: number) => {
         const card = getCard(); if (card) { card.style.transition = 'filter 0.05s ease-out'; card.style.filter = 'brightness(2.5) contrast(0.5)'; setTimeout(() => { card.style.transition = 'filter 0.5s ease-out'; card.style.filter = 'none'; }, dur); }
     };
-    const easeInOutSine = (x: number): number => -(Math.cos(Math.PI * x) - 1) / 2; const easeInOutQuad = (x: number): number => x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; const easeOutCubic = (x: number): number => 1 - Math.pow(1 - x, 3);
+    const easeInOutSine = (x: number): number => -(Math.cos(Math.PI * x) - 1) / 2; const easeInOutQuad = (x: number): number => x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
 
     return (
         <>
